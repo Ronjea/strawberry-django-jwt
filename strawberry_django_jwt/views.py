@@ -21,7 +21,7 @@ def make_status_response(response: GraphQLHTTPResponse) -> StatusGraphQLHTTPResp
 class BaseStatusHandlingGraphQLView(BaseView):
     def _create_response(self, response_data: GraphQLHTTPResponse, sub_response: HttpResponse) -> JsonResponse:
         data = cast(StatusGraphQLHTTPResponse, response_data)
-        response = JsonResponse(data, status=data.get("status", None))
+        response = JsonResponse(data, status=data.get("status"))
 
         for name, value in sub_response.items():
             response[name] = value

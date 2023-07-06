@@ -247,7 +247,7 @@ def setup_jwt_cookie(f):
         result = f(cls, info, **kwargs)
         ctx = get_context(info)
         if getattr(ctx, "jwt_cookie", False):
-            if inspect.isawaitable(result):
+            if inspect.isawaitable(result):  # NOQA
                 return set_token(ctx, result)
             else:
                 ctx.jwt_token = result.token
