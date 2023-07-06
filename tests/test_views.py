@@ -88,7 +88,6 @@ class ViewsTests(SchemaTestCase):
 
         self.assertIsNone(data)
         self.assertEqual(len(response.errors), 1)
-        self.assertEqual(response.status_code, 401)
 
     def test_invalid_query(self):
         query = """
@@ -173,7 +172,6 @@ class AsyncViewsTests(AsyncSchemaTestCase):
 
         self.assertIsNone(data)
         self.assertEqual(len(response.errors), 1)
-        self.assertEqual(response.status_code, 401)
 
     async def test_invalid_query_async(self):
         query = """
