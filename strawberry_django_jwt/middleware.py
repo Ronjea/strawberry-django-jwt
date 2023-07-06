@@ -79,7 +79,9 @@ class BaseJSONWebTokenMiddleware(Extension):
                 else:
                     context.user = AnonymousUser()
 
-        if (
+        if (_authenticate(context) or token_argument is not None) and self.authenticate_context(info, **kwargs):
+            return context, token_argument
+        elif (
             info.field_name == "__schema"
             and cast(GraphQLResolveInfo, info).parent_type.name == "Query"
             and jwt_settings.JWT_AUTHENTICATE_INTROSPECTION
