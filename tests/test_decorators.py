@@ -8,7 +8,9 @@ from tests.testcases import TestCase
 
 class UserPassesTests(TestCase):
     def test_user_passes_test(self):
-        result = decorators.user_passes_test(lambda u: u.pk == self.user.pk,)(
+        result = decorators.user_passes_test(
+            lambda u: u.pk == self.user.pk,
+        )(
             lambda src, info: None
         )(None, info=self.info(self.user))
 

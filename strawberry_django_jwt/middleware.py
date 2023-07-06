@@ -35,7 +35,7 @@ def allow_any(info, **kwargs):
     field_type = getattr(field.type, "of_type", None)
 
     return field_type is not None and any(
-        [issubclass(class_type, GraphQLType) and isinstance(field_type, class_type) for class_type in tuple(jwt_settings.JWT_ALLOW_ANY_CLASSES)]
+        issubclass(class_type, GraphQLType) and isinstance(field_type, class_type) for class_type in tuple(jwt_settings.JWT_ALLOW_ANY_CLASSES)
     )
 
 
@@ -79,15 +79,12 @@ class BaseJSONWebTokenMiddleware(Extension):
                 else:
                     context.user = AnonymousUser()
 
-        if (_authenticate(context) or token_argument is not None) and self.authenticate_context(info, **kwargs):
-            return context, token_argument
-        elif (
+        if (
             info.field_name == "__schema"
             and cast(GraphQLResolveInfo, info).parent_type.name == "Query"
             and jwt_settings.JWT_AUTHENTICATE_INTROSPECTION
             and self.authenticate_context(info, **kwargs)
         ):
-
             raise exceptions.PermissionDenied(_("The introspection query requires authentication."))
 
         return context, token_argument
@@ -98,7 +95,6 @@ class JSONWebTokenMiddleware(BaseJSONWebTokenMiddleware):
         context, token_argument = self.resolve_base(info, **kwargs)
 
         if (_authenticate(context) or token_argument is not None) and self.authenticate_context(info, **kwargs):
-
             user = authenticate(request=context, **kwargs)
 
             if user is not None:
@@ -115,7 +111,6 @@ class AsyncJSONWebTokenMiddleware(BaseJSONWebTokenMiddleware):
         context, token_argument = self.resolve_base(info, **kwargs)
 
         if (_authenticate(context) or token_argument is not None) and self.authenticate_context(info, **kwargs):
-
             user = await authenticate_async(request=context, **kwargs)
 
             if user is not None:
