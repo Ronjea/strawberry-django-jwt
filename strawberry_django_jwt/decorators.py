@@ -46,6 +46,7 @@ __all__ = [
 
 def is_async() -> bool:
     import asyncio
+
     # django uses the same method to detect async operation
     # https://github.com/django/django/blob/bb076476cf560b988f8d80dbbc4a3c85df54b1b9/django/utils/asyncio.py
     try:
@@ -54,6 +55,7 @@ def is_async() -> bool:
         return False
     else:
         return True
+
 
 def with_info(target):
     def signature_add_fn(self, info: Info, *args, **kwargs):
