@@ -11,7 +11,6 @@ from django.middleware.csrf import rotate_token
 from django.utils.translation import gettext as _
 import strawberry
 from strawberry.types import Info
-from strawberry.utils.inspect import in_async_context
 
 from strawberry_django_jwt import exceptions, signals
 from strawberry_django_jwt.auth import authenticate
@@ -44,6 +43,17 @@ __all__ = [
     "login_field",
 ]
 
+
+def is_async() -> bool:
+    import asyncio
+    # django uses the same method to detect async operation
+    # https://github.com/django/django/blob/bb076476cf560b988f8d80dbbc4a3c85df54b1b9/django/utils/asyncio.py
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        return False
+    else:
+        return True
 
 def with_info(target):
     def signature_add_fn(self, info: Info, *args, **kwargs):
@@ -177,7 +187,7 @@ def token_auth(f):
     @refresh_expiration
     def wrapper(cls, info: Info, password, **kwargs):
         context = get_context(info)
-        if inspect.isawaitable(f) or (isinstance(context, ASGIRequest) and in_async_context()):
+        if inspect.isawaitable(f) or (isinstance(context, ASGIRequest) and is_async()):
             return wrapper_async(cls, info, password, **kwargs)
         context._jwt_token_auth = True
         username = kwargs.get(get_user_model().USERNAME_FIELD)
