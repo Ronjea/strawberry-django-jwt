@@ -5,6 +5,10 @@ on:
   pull_request:
     types: [opened, reopened]
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   tests:
     name: ${{ matrix.session }} ${{ matrix.python-version }} / ${{ matrix.os }}
