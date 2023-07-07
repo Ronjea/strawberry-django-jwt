@@ -166,7 +166,6 @@ class AsyncViewsTests(AsyncSchemaTestCase):
             test
         }
         """
-
         response = await self.client.execute(query)
         data = response.data
 
