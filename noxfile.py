@@ -7,10 +7,12 @@ from nox_poetry import Session, session
 
 package = "strawberry_django_jwt"
 python_versions = ["3.11", "3.10", "3.9", "3.8"]  # + ["3.7"] # Disable for now, strawberry-django does not support 3.7 since it uses TypedDict in settings
-django_versions = ["4.1", "3.2"]
+django_versions = ["4.2", "3.2"]
 invalid_sessions = [
     ("3.7", "4.1"),
+    ("3.7", "4.2"),
     ("3.10", "3.1"),
+    ("3.11", "3.1"),
 ]
 pyjwt_versions = ["1.7.1", "latest"]
 strawberry_graphql_versions = ["latest"]
@@ -83,7 +85,7 @@ def export_requirements_without_extras(session_: Session) -> Path:
     return requirements  # noqa: R504
 
 
-@session(name="pre-commit", python="3.11")
+@session(name="pre-commit", python=["3.11", "3.10", "3.9", "3.8"])
 def pre_commit(session_: Session) -> None:
     """Lint using pre-commit."""
     args = session_.posargs or ["run", "--all-files", "--show-diff-on-failure"]
