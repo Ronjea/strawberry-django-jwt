@@ -94,14 +94,14 @@ jobs:
           digest = hashlib.sha256(payload).hexdigest()
           result = "${{ runner.os }}-{}-{}-pre-commit".format(python, digest[:8])
           print("::set-output name=result::{}".format(result))
-      - name: Restore pre-commit cache
-        uses: actions/cache@v3
-        if: matrix.session == 'pre-commit'
-        with:
-          path: ~/.cache/pre-commit
-          key: ${{ steps.pre-commit-cache.outputs.result }}-${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: |
-            ${{ steps.pre-commit-cache.outputs.result }}-
+      #      - name: Restore pre-commit cache
+      #        uses: actions/cache@v3
+      #        if: matrix.session == 'pre-commit'
+      #        with:
+      #          path: ~/.cache/pre-commit
+      #          key: ${{ steps.pre-commit-cache.outputs.result }}-${{ hashFiles('.pre-commit-config.yaml') }}
+      #          restore-keys: |
+      #            ${{ steps.pre-commit-cache.outputs.result }}-
       - name: Run Nox
         run: |
           nox --force-color --python=${{ matrix.python-version }}
@@ -119,10 +119,10 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install Wheel
         run: |
