@@ -44,6 +44,7 @@ __all__ = [
     "login_field",
 ]
 
+
 def in_async_context() -> bool:
     # Based on the way django checks if there's an event loop in the current thread
     # https://github.com/django/django/blob/main/django/utils/asyncio.py
@@ -53,6 +54,7 @@ def in_async_context() -> bool:
         return False
     else:
         return True
+
 
 def with_info(target):
     def signature_add_fn(self, info: Info, *args, **kwargs):
