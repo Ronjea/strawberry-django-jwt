@@ -99,7 +99,7 @@ def pre_commit(session_: Session) -> None:
         activate_virtualenv_in_precommit_hooks(session_)
 
 
-@session(python="3.11")
+@session(python=["3.11", "3.10", "3.9", "3.8"])
 def safety(session_: Session) -> None:
     """Scan dependencies for insecure packages."""
     requirements = session_.poetry.export_requirements()
@@ -107,7 +107,7 @@ def safety(session_: Session) -> None:
     session_.run("safety", "check", "--full-report", f"--file={requirements}")
 
 
-@session(python="3.11")
+@session(python=["3.11", "3.10", "3.9", "3.8"])
 def mypy(session_: Session) -> None:
     """Type-check using mypy."""
     args = session_.posargs or ["strawberry_django_jwt", "tests"]
@@ -136,7 +136,7 @@ def tests(session_: Session, django: str) -> None:
             session_.notify("coverage")
 
 
-@session(python="3.11")
+@session(python=["3.11", "3.10", "3.9", "3.8"])
 @nox.parametrize("pyjwt", pyjwt_versions)
 def tests_pyjwt(session_: Session, pyjwt: str) -> None:
     session_.install(".")
@@ -151,7 +151,7 @@ def tests_pyjwt(session_: Session, pyjwt: str) -> None:
             session_.notify("coverage")
 
 
-@session(python="3.11")
+@session(python=["3.11", "3.10", "3.9", "3.8"])
 @nox.parametrize("strawberry", strawberry_graphql_versions)
 def tests_strawberry_graphql(session_: Session, strawberry: str) -> None:
     session_.install(".")
@@ -168,7 +168,7 @@ def tests_strawberry_graphql(session_: Session, strawberry: str) -> None:
             session_.notify("coverage")
 
 
-@session(python="3.11")
+@session(python=["3.11", "3.10", "3.9", "3.8"])
 def coverage(session_: Session) -> None:
     """Produce the coverage report."""
     # Do not use session.posargs unless this is the only session.
