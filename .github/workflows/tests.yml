@@ -75,6 +75,11 @@ jobs:
         with:
           virtualenvs-create: true
           virtualenvs-in-project: true
+      - name: Activate Windows
+        run: |
+          source .venv/scripts/activate
+        if: runner.os == 'windows-latest'
+
       - name: Install Nox and nox-poetry
         run: |
           pip install nox nox-poetry
