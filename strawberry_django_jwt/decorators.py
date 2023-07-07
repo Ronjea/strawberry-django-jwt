@@ -1,3 +1,4 @@
+import asyncio
 from calendar import timegm
 from datetime import datetime
 from functools import wraps
@@ -43,19 +44,15 @@ __all__ = [
     "login_field",
 ]
 
-
-def is_async() -> bool:
-    import asyncio
-
-    # django uses the same method to detect async operation
-    # https://github.com/django/django/blob/bb076476cf560b988f8d80dbbc4a3c85df54b1b9/django/utils/asyncio.py
+def in_async_context() -> bool:
+    # Based on the way django checks if there's an event loop in the current thread
+    # https://github.com/django/django/blob/main/django/utils/asyncio.py
     try:
         asyncio.get_running_loop()
     except RuntimeError:
         return False
     else:
         return True
-
 
 def with_info(target):
     def signature_add_fn(self, info: Info, *args, **kwargs):
@@ -189,7 +186,7 @@ def token_auth(f):
     @refresh_expiration
     def wrapper(cls, info: Info, password, **kwargs):
         context = get_context(info)
-        if inspect.isawaitable(f) or (isinstance(context, ASGIRequest) and is_async()):
+        if inspect.isawaitable(f) or (isinstance(context, ASGIRequest) and in_async_context()):
             return wrapper_async(cls, info, password, **kwargs)
         context._jwt_token_auth = True
         username = kwargs.get(get_user_model().USERNAME_FIELD)
