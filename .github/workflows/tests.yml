@@ -81,7 +81,7 @@ jobs:
           virtualenvs-in-project: true
       - name: Activate Windows
         run: |
-          source .venv/scripts/activate
+          source $VENV
         if: matrix.os == 'windows-latest'
 
       - name: Install Nox and nox-poetry
