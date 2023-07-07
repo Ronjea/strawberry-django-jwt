@@ -38,6 +38,9 @@ jobs:
         with:
           version-command: |
             bash -o pipefail -c "poetry version | awk '{ print \$2 }'"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+
       - name: Bump version for developmental release
         if: "! steps.check-version.outputs.tag"
         run: |
@@ -58,4 +61,4 @@ jobs:
           publish: ${{ steps.check-version.outputs.tag != '' }}
           tag: ${{ steps.check-version.outputs.tag }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
