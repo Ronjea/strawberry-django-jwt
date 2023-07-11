@@ -1,10 +1,11 @@
 from sys import version_info
-from unittest.mock import patch
 
 if version_info < (3, 8):
     from mock import AsyncMock
+elif version_info.major == 3 and version_info.minor >= 11:
+    from unittest.mock import AsyncMock, patch
 else:
-    from unittest.mock import AsyncMock
+    from asynctest import patch, CoroutineMock as AsyncMock
 
 from django.conf import settings
 from django.contrib.auth import get_user_model

@@ -43,11 +43,10 @@ async def authenticate(request=None, **credentials):
                 user = await backend.authenticate_async(request, **credentials)
             elif asyncio.iscoroutinefunction(backend.authenticate):
                 user = await backend.authenticate(request, **credentials)
+            elif isinstance(request, ASGIRequest):
+                user = await sync_to_async(backend.authenticate)(request, **credentials)
             else:
-                if isinstance(request, ASGIRequest):
-                    user = await sync_to_async(backend.authenticate)(request, **credentials)
-                else:
-                    user = backend.authenticate(request, **credentials)
+                user = backend.authenticate(request, **credentials)
         except PermissionDenied:
             # This backend says to stop in our tracks - this user should not be allowed in at all.
             break

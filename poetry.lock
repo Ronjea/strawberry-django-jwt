@@ -73,6 +73,17 @@ six = ">=1.6.1,<2.0"
 wheel = ">=0.23.0,<1.0"
 
 [[package]]
+name = "asynctest"
+version = "0.13.0"
+description = "Enhance the standard unittest package with features for testing asyncio libraries"
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "asynctest-0.13.0-py3-none-any.whl", hash = "sha256:5da6118a7e6d6b54d83a8f7197769d046922a44d2a99c21382f0a6e4fadae676"},
+    {file = "asynctest-0.13.0.tar.gz", hash = "sha256:c27862842d15d83e6a34eb0b2866c323880eb3a75e4485b079ea11748fd77fac"},
+]
+
+[[package]]
 name = "backports-cached-property"
 version = "1.0.2"
 description = "cached_property() - computed once per instance, cached as attribute"
@@ -1775,4 +1786,4 @@ dev = ["uvicorn"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "2c1dc7c35256085a2167e856c055989de82c28cb2a4a3c8153268601eeda368b"
+content-hash = "b26f4094aabca1a73a7268baf07578beae73890adc89096c76cdf60eb20dc057"
