@@ -170,7 +170,7 @@ def tests_strawberry_graphql(session_: Session, strawberry: str) -> None:
             session_.notify("coverage")
 
 
-@session(python=["3.11", "3.10", "3.9", "3.8"])
+@session(python=["3.11", "3.10"])
 def coverage(session_: Session) -> None:
     """Produce the coverage report."""
     # Do not use session.posargs unless this is the only session.
