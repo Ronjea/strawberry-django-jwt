@@ -1,5 +1,5 @@
 [flake8]
 max-line-length = 160
-exclude = .eggs,.git,.hg,.mypy_cache,.tox,.venv,venv,__pycached__,_build,buck-out,build,dist
+exclude = .eggs,.git,.hg,.mypy_cache,.tox,.venv,venv,__pycached__,_build,buck-out,build,dist,.idea
 ban-relative-imports = true
 ignore = C416, W503
