@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "strawberry-django-auth-jwt"
-version = "0.2.4"
+version = "0.2.5"
 description = "Strawberry-graphql port of the graphene-django-jwt package"
 license = "MIT"
 authors = ["Javier Borrego <javierborregocejudo@gmail.com>"]
@@ -85,6 +85,7 @@ exclude = '''
   | buck-out
   | build
   | dist
+  | .idea
 )/
 '''
 
